@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tk.stock.mapper.StockMapper">
+    <select id="findAll"  resultType="com.tk.stock.model.Stock">
+        select * from tb_stock
+    </select>
+    <insert id="addBatch">
+        INSERT INTO tb_stock(stock_code,stock_name,stock_date,start_price,end_price,max_price,min_price,total_money)
+        VALUES
+        <foreach collection="list" item="stock" separator=",">
+            (#{stock.stock_code},#{stock.stock_name},#{stock.stock_date},#{stock.start_price},#{stock.end_price},#{stock.max_price},#{stock.min_price},#{stock.total_money})
+        </foreach>
+    </insert>
+    <select id="search"  resultType="com.tk.stock.model.Stock" parameterType="map">
+        select * from tb_stock
+       <if test="stockKey!=null and time!=null" >
+           where stock_name like ${"'"+stockKey+"%"+"'"} or stock_code like ${"'"+stockKey+"%"+"'"} and stock_date like ${"'"+time+"%"+"'"}
+       </if>
+       <if test="stockKey==null and time==null">
+           where 1=1
+       </if>
+        <if test="stockKey!=null and time==null">
+            where stock_name like ${"'"+stockKey+"%"+"'"} or stock_code like ${"'"+stockKey+"%"+"'"}
+        </if>
+    </select>
+</mapper>

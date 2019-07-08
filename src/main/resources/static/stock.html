@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>股票信息大全</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+   
+	<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="plugins/angularjs/angular.min.js"></script>
+	<!-- 分页组件 -->
+	<script src="plugins/angularjs/pagination.js"></script>
+	<link rel="stylesheet" href="plugins/angularjs/pagination.css">
+	<script src="js/base.js"></script>
+	<script src="js/stockService.js"></script>
+	<script src="js/stockController.js"></script>
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" ng-app="stock" ng-controller="stockController" ng-init="findAll(1)">
+  <!-- .box-body -->
+                
+                    <div class="box-header with-border">
+                        <h1 class="box-title" style="text-align: center">股票大全</h1>
+                    </div>
+
+                    <div class="box-body">
+
+                        <!-- 数据表格 -->
+                        <div class="table-box">
+
+                            <!--工具栏-->
+                           
+                            <div class="box-tools pull-right">
+                                <div class="has-feedback" style="margin-right: 50px;margin-bottom: 20px">
+									<input  ng-model="stockKey" class="btn btn-default" >股票名称或代码
+									<!--预期换成日历形式的组件，便于选择-->
+									<input  ng-model="time" class="btn btn-default">时间
+									<button class="btn btn-default" ng-click="search()" >查询</button>
+                                </div>
+                            </div>
+
+                            <!--工具栏/-->
+
+			                  <!--数据列表-->
+			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+			                      <thead>
+			                          <tr>
+			                              
+										  <th class="sorting_asc" style="text-align:center">ID</th>
+									      <th class="sorting" style="text-align:center">编号</th>
+									      <th class="sorting" style="text-align:center">名称</th>
+									      <th class="sorting" style="text-align:center">时间</th>
+										  <th class="sorting" style="text-align:center">开盘价</th>
+										  <th class="sorting" style="text-align:center">结束价</th>
+										  <th class="sorting" style="text-align:center">最高价</th>
+										  <th class="sorting" style="text-align:center">最低价</th>
+										  <th class="sorting" style="text-align:center">总金额</th>
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+								  <tr  ng-repeat="stock in stockList">
+									  <td>{{stock.id}}</td>
+									  <td>{{stock.stock_code}}</td>
+									  <td>{{stock.stock_name}}</td>
+									  <td>{{stock.stock_date}}</td>
+									  <td>{{stock.start_price}}</td>
+									  <td>{{stock.end_price}}</td>
+									  <td>{{stock.max_price}}</td>
+									  <td>{{stock.min_price}}</td>
+									  <td>{{stock.total_money}}</td>
+								  </tr>
+								  </tr>
+
+
+								  </tbody>
+			                  </table>
+			                  <!--数据列表/-->
+							<tm-pagination conf="paginationConf"></tm-pagination>
+							 
+                        </div>
+                        <!-- 数据表格 /-->
+                        
+                        
+                     </div>
+                    <!-- /.box-body -->
+		
+</body>
+
+</html>
